@@ -3,7 +3,10 @@ let firstOperand, secondOperand, operator;
 
 // DOM Queries
 const display = document.querySelector('#display');
-const buttons = document.querySelectorAll(".btn");
+const numberButtons = document.querySelectorAll(".number-btn");
+const clearButton = document.querySelector('#clear');
+const equalButton = document.querySelector('#equal');
+const decimalButton = document.querySelector('#decimal');
 
 // Functions
 const add = function(a, b) {
@@ -41,12 +44,6 @@ const operate = function(operator, a, b) {
     }
 };
 
-const buttonCallback = function() {
-    text = this.textContent;
-    console.log(text)
-}
-
 // Main
 
 // Add event listeners to the buttons
-buttons.forEach(btn => btn.addEventListener('click', buttonCallback));

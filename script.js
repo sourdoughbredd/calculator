@@ -3,7 +3,8 @@ let firstOperand, secondOperand, operator;
 
 // DOM Queries
 const display = document.querySelector('#display');
-const numberButtons = document.querySelectorAll(".number-btn");
+const numberButtons = document.querySelectorAll('.number-btn');
+const operatorButtons = document.querySelectorAll('.operator');
 const clearButton = document.querySelector('#clear');
 const equalButton = document.querySelector('#equal');
 const decimalButton = document.querySelector('#decimal');
@@ -46,4 +47,9 @@ const operate = function(operator, a, b) {
 
 // Main
 
-// Add event listeners to the buttons
+// Add event listeners to the buttons with custom callbacks based on button type
+numberButtons.forEach(btn => btn.addEventListener('click', numberButtonCallback));
+operatorButtons.forEach(btn => btn.addEventListener('click', operatorButtonCallback));
+decimalButton.addEventListener('click', decimalButtonCallback);
+clearButton.addEventListener('click', clearButtonCallback);
+equalButton.addEventListener('click', equalButtonCallback);

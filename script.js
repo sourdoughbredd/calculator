@@ -52,7 +52,7 @@ const updateDisplay = function(str) {
 }
 
 const numberButtonCallback = function() {
-    digit = this.textContent;
+    const digit = this.textContent;
     if (firstOperand && operator) {
         secondOperand += digit;
         updateDisplay(secondOperand);
@@ -63,8 +63,28 @@ const numberButtonCallback = function() {
 }
 
 const operatorButtonCallback = function() {
-
-}
+    const newOperator = this.textContent;
+    if (!firstOperand) return; // no operator allowed until we have at least one operand
+    if (!secondOperand) {
+        // No secondOperand supplied. Replace current operator.
+        operator = newOperator;
+    } else {
+        // Carry out current operation and get ready to use the requested operator on the result
+        result = operate(operator, Number(firstOperand), Number(secondOperand));
+        if (result === undefined) {
+            // Divide by zero. Delete operator and second operand so user can try something else.
+            operator = '';
+            secondOperand = '';
+            updateDisplay(firstOperand);
+        } else {
+            result = result.toString();
+            firstOperand = operate(operator, Number(firstOperand), Number(secondOperand));
+            operator = newOperator;
+            secondOperand = '';
+            updateDisplay(firstOperand);
+        }
+    }
+};
 
 const decimalButtonCallback = function() {
 

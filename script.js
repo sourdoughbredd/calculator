@@ -1,5 +1,11 @@
+// Variable Declarations
 let firstOperand, secondOperand, operator;
 
+// DOM Queries
+const display = document.querySelector('#display');
+const buttons = document.querySelectorAll(".btn");
+
+// Functions
 const add = function(a, b) {
 	return a + b;
 };
@@ -33,4 +39,14 @@ const operate = function(operator, a, b) {
         default:
             break;
     }
+};
+
+const buttonCallback = function() {
+    text = this.textContent;
+    console.log(text)
 }
+
+// Main
+
+// Add event listeners to the buttons
+buttons.forEach(btn => btn.addEventListener('click', buttonCallback));

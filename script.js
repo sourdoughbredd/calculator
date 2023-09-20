@@ -1,5 +1,7 @@
 // Variable Declarations
-let firstOperand, secondOperand, operator;
+let firstOperand = '';
+let operator = '';
+let secondOperand = '';
 
 // DOM Queries
 const display = document.querySelector('#display');
@@ -36,20 +38,47 @@ const operate = function(operator, a, b) {
             return add(a, b);
         case '-':
             return subtract(a, b);
-        case '*':
+        case 'x':
             return multiply(a, b);
-        case '/':
+        case '÷':
             return divide(a, b);
         default:
             break;
     }
 };
 
+const updateDisplay = function(str) {
+
+}
+
+const numberButtonCallback = function() {
+    
+}
+
+const operatorButtonCallback = function() {
+
+}
+
+const decimalButtonCallback = function() {
+
+}
+
+const equalButtonCallback = function() {
+    
+}
+
+const clearButtonCallback = function() {
+    // Reset to initial state
+    reset();
+}
+
+///////////////////
 // Main
+///////////////////
 
 // Add event listeners to the buttons with custom callbacks based on button type
 numberButtons.forEach(btn => btn.addEventListener('click', numberButtonCallback));
 operatorButtons.forEach(btn => btn.addEventListener('click', operatorButtonCallback));
 decimalButton.addEventListener('click', decimalButtonCallback);
-clearButton.addEventListener('click', clearButtonCallback);
 equalButton.addEventListener('click', equalButtonCallback);
+clearButton.addEventListener('click', clearButtonCallback);

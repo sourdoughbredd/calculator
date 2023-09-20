@@ -70,14 +70,14 @@ const operatorButtonCallback = function() {
         operator = newOperator;
     } else {
         // Carry out current operation and get ready to use the requested operator on the result
-        result = operate(operator, Number(firstOperand), Number(secondOperand));
-        if (result === undefined) {
+        resultNum = operate(operator, Number(firstOperand), Number(secondOperand));
+        if (resultNum === undefined) {
             // Divide by zero. Delete operator and second operand so user can try something else.
             operator = '';
             secondOperand = '';
             updateDisplay(firstOperand);
         } else {
-            result = result.toString();
+            result = resultNum.toString();
             firstOperand = operate(operator, Number(firstOperand), Number(secondOperand));
             operator = newOperator;
             secondOperand = '';
@@ -91,7 +91,7 @@ const decimalButtonCallback = function() {
 }
 
 const equalButtonCallback = function() {
-    
+
 }
 
 const clearButtonCallback = function() {

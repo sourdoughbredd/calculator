@@ -48,11 +48,18 @@ const operate = function(operator, a, b) {
 };
 
 const updateDisplay = function(str) {
-
+    display.textContent = str;
 }
 
 const numberButtonCallback = function() {
-    
+    digit = this.textContent;
+    if (firstOperand && operator) {
+        secondOperand += digit;
+        updateDisplay(secondOperand);
+    } else {
+        firstOperand += digit;
+        updateDisplay(firstOperand);
+    }
 }
 
 const operatorButtonCallback = function() {

@@ -51,6 +51,12 @@ const updateDisplay = function(str) {
     display.textContent = str;
 }
 
+const divideByZeroReset = function() {
+    operator = '';
+    secondOperand = '';
+    updateDisplay(firstOperand);
+}
+
 const numberButtonCallback = function() {
     const digit = this.textContent;
     if (firstOperand && operator) {
@@ -72,10 +78,7 @@ const operatorButtonCallback = function() {
         // Carry out current operation and get ready to use the requested operator on the result
         resultNum = operate(operator, Number(firstOperand), Number(secondOperand));
         if (resultNum === undefined) {
-            // Divide by zero. Delete operator and second operand so user can try something else.
-            operator = '';
-            secondOperand = '';
-            updateDisplay(firstOperand);
+            divideByZeroReset();
         } else {
             result = resultNum.toString();
             firstOperand = operate(operator, Number(firstOperand), Number(secondOperand));
@@ -91,7 +94,12 @@ const decimalButtonCallback = function() {
 }
 
 const equalButtonCallback = function() {
-
+    resultNum = operate(operator, Number(firstOperand), Number(secondOperand));
+    if (resultNum === undefined) {
+        divideByZeroReset();
+    } else {
+        
+    }
 }
 
 const clearButtonCallback = function() {

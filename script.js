@@ -96,7 +96,19 @@ const operatorButtonCallback = function() {
 };
 
 const decimalButtonCallback = function() {
-
+    if (!operator) {
+        // Add to first operand
+        if (!firstOperand.includes('.')) {
+            firstOperand += '.';
+            updateDisplay(firstOperand);
+        }
+    } else {
+        // Add to second operand
+        if (!secondOperand.includes('.')) {
+            secondOperand += '.';
+            updateDisplay(secondOperand);
+        }
+    }
 }
 
 const equalButtonCallback = function() {

@@ -57,6 +57,13 @@ const divideByZeroReset = function() {
     updateDisplay(firstOperand);
 }
 
+const reset = function() {
+    firstOperand = '';
+    operator = '';
+    secondOperand = '';
+    updateDisplay(firstOperand);   
+}
+
 const numberButtonCallback = function() {
     const digit = this.textContent;
     if (firstOperand && operator) {

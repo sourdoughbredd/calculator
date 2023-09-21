@@ -72,16 +72,15 @@ const operatorButtonCallback = function() {
     const newOperator = this.textContent;
     if (!firstOperand) return; // no operator allowed until we have at least one operand
     if (!secondOperand) {
-        // No secondOperand supplied. Replace current operator.
+        // No secondOperand supplied yet. Replace current operator.
         operator = newOperator;
     } else {
-        // Carry out current operation and get ready to use the requested operator on the result
+        // Carry out current operation and get ready to use the new operator on the result
         resultNum = operate(operator, Number(firstOperand), Number(secondOperand));
         if (resultNum === undefined) {
             divideByZeroReset();
         } else {
-            result = resultNum.toString();
-            firstOperand = operate(operator, Number(firstOperand), Number(secondOperand));
+            firstOperand = resultNum.toString();
             operator = newOperator;
             secondOperand = '';
             updateDisplay(firstOperand);
@@ -94,11 +93,15 @@ const decimalButtonCallback = function() {
 }
 
 const equalButtonCallback = function() {
-    resultNum = operate(operator, Number(firstOperand), Number(secondOperand));
-    if (resultNum === undefined) {
-        divideByZeroReset();
-    } else {
-        
+    if (secondOperand) {
+        // We have operation to carry out
+        resultNum = operate(operator, Number(firstOperand), Number(secondOperand));
+        if (resultNum === undefined) {
+            divideByZeroReset();
+        } else {
+            result = resultNum.toString();
+            first
+        }
     }
 }
 

@@ -47,8 +47,30 @@ const operate = function(operator, a, b) {
     }
 };
 
+const eightDigitRounder = function(str) {
+    let roundedStr = str;
+    const tokens = str.split('.');
+    if (tokens.length === 1) {
+        // No decimal. Round whole number.
+    } else {
+        // Decimal found. Round to 8 total digits
+        numLeft = tokens[0].length;
+        numRight = tokens[1].length;
+        targetNumRight = 8 - numLeft;
+
+    }
+    // console.log(tokens);
+    return roundedStr;
+}
+
 const updateDisplay = function(str) {
-    display.textContent = str;
+    // Only keep up to 8 digits and a decimal
+    let processedStr = str;
+    const digits = str.match(/\d/g);
+    if (digits && digits.length > 8) {
+        processedStr = eightDigitRounder(str);
+    }
+    display.textContent = processedStr;
 }
 
 const divideByZeroReset = function() {
@@ -99,13 +121,13 @@ const decimalButtonCallback = function() {
     if (!operator) {
         // Add to first operand
         if (!firstOperand.includes('.')) {
-            firstOperand += '.';
+            firstOperand += (firstOperand) ? '.' : '0.';
             updateDisplay(firstOperand);
         }
     } else {
         // Add to second operand
         if (!secondOperand.includes('.')) {
-            secondOperand += '.';
+            secondOperand += (secondOperand) ? '.' : '0.';;
             updateDisplay(secondOperand);
         }
     }

@@ -164,7 +164,13 @@ const clearButtonCallback = function() {
 }
 
 const backspaceButtonCallback = function() {
-    
+    if (firstOperand && operator === '') {
+        firstOperand = firstOperand.slice(0,-1)
+        updateDisplay(firstOperand);
+    } else if (secondOperand){ 
+        secondOperand = secondOperand.slice(0, -1);
+        updateDisplay(secondOperand); 
+    }
 }
 
 ///////////////////

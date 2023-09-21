@@ -4,7 +4,8 @@ let operator = '';
 let secondOperand = '';
 
 // DOM Queries
-const display = document.querySelector('#display');
+const mainDisplay = document.querySelector('#main-display');
+const operationDisplay = document.querySelector('#operation-display');
 const numberButtons = document.querySelectorAll('.number-btn');
 const operatorButtons = document.querySelectorAll('.operator');
 const clearButton = document.querySelector('#clear');
@@ -74,13 +75,13 @@ const eightDigitLimiter = function(numStr) {
     return (Number(leftOfDecimal) + Number(newRight)).toString();
 }
 
-const updateDisplay = function(str) {
-    let processedStr = str;
-    const digits = str.match(/\d/g);
+const updateDisplay = function(main, operation) {
+    let processedMain = main;
+    const digits = main.match(/\d/g);
     if (digits && digits.length > 8) {
-        processedStr = eightDigitLimiter(str);
+        processedMain = eightDigitLimiter(str);
     }
-    display.textContent = processedStr;
+    display.textContent = processedMain;
 }
 
 const divideByZeroReset = function() {

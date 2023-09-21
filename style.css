@@ -48,12 +48,9 @@
   background-color: rgb(151, 164, 152);
 }
 
-#clear {
+#clear,
+#backspace {
   background-color: rgb(201, 149, 80);
-}
-
-#equal {
-  background-color: rgb(214, 141, 130);
 }
 
 .operator,
@@ -61,13 +58,13 @@
   background-color: rgb(134, 160, 116);
 }
 
-#clear,
-#equal {
-  width: calc(2*var(--btn-size) + var(--btn-gap));
-}
-
 #plus {
   height: calc(2*var(--btn-size) + var(--btn-gap) + 2px);
+}
+
+#equal {
+  background-color: rgb(214, 141, 130);
+  width: calc(2*var(--btn-size) + var(--btn-gap));
 }
 
 .btn-group {

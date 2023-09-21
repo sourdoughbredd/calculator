@@ -2,6 +2,7 @@
 let firstOperand = '';
 let operator = '';
 let secondOperand = '';
+let operation = '';
 
 // DOM Queries
 const mainDisplay = document.querySelector('#main-display');
@@ -54,21 +55,21 @@ const getScientificNotation = function(numStr) {
     return Number(numStr).toExponential(digitLimit);
 }
 
-const eightDigitLimiter = function(numStr) {
+const nDigitLimiter = function(numStr, n) {
     if (numStr.includes('e')) {
         // Our string is in scientific notation. Make sure it obeys digit limit.
         return getScientificNotation(numStr);
     }
     numDigits = numStr.match(/\d/g).length;
-    // Less than 8 digits total
-    if (numDigits <= 8) return numStr;
+    // Less than n digits total
+    if (numDigits <= n) return numStr;
     const [leftOfDecimal, rightOfDecimal] = numStr.split('.');
-    // 8 digits to left of decimal
-    if (leftOfDecimal.length === 8) return Math.round(Number(numStr)).toString();
-    // More than 8 digits to left of decimal
-    if (leftOfDecimal.length > 8) return getScientificNotation(numStr);
-    // Less than 8 digits to left of decimal
-    const targetNumToRight = 8 - leftOfDecimal.length;
+    // n digits to left of decimal
+    if (leftOfDecimal.length === n) return Math.round(Number(numStr)).toString();
+    // More than n digits to left of decimal
+    if (leftOfDecimal.length > n) return getScientificNotation(numStr);
+    // Less than n digits to left of decimal
+    const targetNumToRight = n - leftOfDecimal.length;
     const newRight = Number('0.' + rightOfDecimal)
                     .toFixed(targetNumToRight)
                     .toString()
@@ -76,12 +77,24 @@ const eightDigitLimiter = function(numStr) {
 }
 
 const updateDisplay = function(main, operation) {
+    // process main display number
     let processedMain = main;
     const digits = main.match(/\d/g);
     if (digits && digits.length > 8) {
-        processedMain = eightDigitLimiter(str);
+        processedMain = nDigitLimiter(main, 8);
     }
-    display.textContent = processedMain;
+    mainDisplay.textContent = processedMain;
+
+    // process operation display number
+    console.log(operation);
+    if (operation) {
+        let tokens = operation.split(' ');
+        if (tokens[0]) tokens[0] = nDigitLimiter(tokens[0], 6);
+        if (tokens[2]) tokens[2] = nDigitLimiter(tokens[2], 6);
+        operationDisplay.textContent = tokens.join(' ');
+    } else {
+        operationDisplay.textContent = operation;
+    }
 }
 
 const divideByZeroReset = function() {
@@ -94,17 +107,20 @@ const reset = function() {
     firstOperand = '';
     operator = '';
     secondOperand = '';
-    updateDisplay(firstOperand);   
+    operation = '';
+    updateDisplay('', '');   
 }
 
 const numberButtonCallback = function() {
     const digit = this.textContent;
     if (firstOperand && operator) {
         secondOperand += digit;
-        updateDisplay(secondOperand);
+        operation = firstOperand + ' ' + operator;
+        updateDisplay(secondOperand, operation);
     } else {
         firstOperand += digit;
-        updateDisplay(firstOperand);
+        operation = firstOperand;
+        updateDisplay(firstOperand, operation);
     }
 }
 
@@ -114,6 +130,8 @@ const operatorButtonCallback = function() {
     if (!secondOperand) {
         // No secondOperand supplied yet. Replace current operator.
         operator = newOperator;
+        operation = firstOperand + ' ' + operator;
+        updateDisplay('', operation)
     } else {
         // Carry out current operation and get ready to use the new operator on the result
         resultNum = operate(operator, Number(firstOperand), Number(secondOperand));
@@ -123,7 +141,8 @@ const operatorButtonCallback = function() {
             firstOperand = resultNum.toString();
             operator = newOperator;
             secondOperand = '';
-            updateDisplay(firstOperand);
+            operation = firstOperand + ' ' + operator;
+            updateDisplay('', operation);
         }
     }
 };
@@ -133,13 +152,14 @@ const decimalButtonCallback = function() {
         // Add to first operand
         if (!firstOperand.includes('.')) {
             firstOperand += (firstOperand) ? '.' : '0.';
-            updateDisplay(firstOperand);
+            operation = firstOperand;
+            updateDisplay(firstOperand, operation);
         }
     } else {
         // Add to second operand
         if (!secondOperand.includes('.')) {
             secondOperand += (secondOperand) ? '.' : '0.';
-            updateDisplay(secondOperand);
+            updateDisplay(secondOperand, operation);
         }
     }
 }
@@ -151,10 +171,11 @@ const equalButtonCallback = function() {
         if (resultNum === undefined) {
             divideByZeroReset();
         } else {
+            operation += ' ' + secondOperand +  ' =';
             firstOperand = resultNum.toString();
             operator = '';
             secondOperand = '';
-            updateDisplay(firstOperand);
+            updateDisplay(firstOperand, operation);
         }
     }
 }
@@ -167,10 +188,11 @@ const clearButtonCallback = function() {
 const backspaceButtonCallback = function() {
     if (firstOperand && operator === '') {
         firstOperand = firstOperand.slice(0,-1)
-        updateDisplay(firstOperand);
+        operation = firstOperand;
+        updateDisplay(firstOperand, operation);
     } else if (secondOperand){ 
         secondOperand = secondOperand.slice(0, -1);
-        updateDisplay(secondOperand); 
+        updateDisplay(secondOperand, operation); 
     }
 }
 

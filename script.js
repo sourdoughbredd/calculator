@@ -10,6 +10,7 @@ const operatorButtons = document.querySelectorAll('.operator');
 const clearButton = document.querySelector('#clear');
 const equalButton = document.querySelector('#equal');
 const decimalButton = document.querySelector('#decimal');
+const backspaceButton = document.querySelector('#backspace');
 
 // Functions
 const add = function(a, b) {
@@ -162,6 +163,10 @@ const clearButtonCallback = function() {
     reset();
 }
 
+const backspaceButtonCallback = function() {
+    
+}
+
 ///////////////////
 // Main
 ///////////////////
@@ -172,3 +177,4 @@ operatorButtons.forEach(btn => btn.addEventListener('click', operatorButtonCallb
 decimalButton.addEventListener('click', decimalButtonCallback);
 equalButton.addEventListener('click', equalButtonCallback);
 clearButton.addEventListener('click', clearButtonCallback);
+backspaceButton.addEventListener('click', backspaceButtonCallback)

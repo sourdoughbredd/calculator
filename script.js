@@ -47,28 +47,37 @@ const operate = function(operator, a, b) {
     }
 };
 
-const eightDigitRounder = function(str) {
-    let roundedStr = str;
-    const tokens = str.split('.');
-    if (tokens.length === 1) {
-        // No decimal. Round whole number.
-    } else {
-        // Decimal found. Round to 8 total digits
-        numLeft = tokens[0].length;
-        numRight = tokens[1].length;
-        targetNumRight = 8 - numLeft;
+const getScientificNotation = function(numStr) {
+    digitLimit = 3;
+    return Number(numStr).toExponential(digitLimit);
+}
 
+const eightDigitLimiter = function(numStr) {
+    if (numStr.includes('e')) {
+        // Our string is in scientific notation. Make sure it obeys digit limit.
+        return getScientificNotation(numStr);
     }
-    // console.log(tokens);
-    return roundedStr;
+    numDigits = numStr.match(/\d/g).length;
+    // Less than 8 digits total
+    if (numDigits <= 8) return numStr;
+    const [leftOfDecimal, rightOfDecimal] = numStr.split('.');
+    // 8 digits to left of decimal
+    if (leftOfDecimal.length === 8) return Math.round(Number(numStr)).toString();
+    // More than 8 digits to left of decimal
+    if (leftOfDecimal.length > 8) return getScientificNotation(numStr);
+    // Less than 8 digits to left of decimal
+    const targetNumToRight = 8 - leftOfDecimal.length;
+    const newRight = Number('0.' + rightOfDecimal)
+                    .toFixed(targetNumToRight)
+                    .toString()
+    return (Number(leftOfDecimal) + Number(newRight)).toString();
 }
 
 const updateDisplay = function(str) {
-    // Only keep up to 8 digits and a decimal
     let processedStr = str;
     const digits = str.match(/\d/g);
     if (digits && digits.length > 8) {
-        processedStr = eightDigitRounder(str);
+        processedStr = eightDigitLimiter(str);
     }
     display.textContent = processedStr;
 }

@@ -99,8 +99,10 @@ const equalButtonCallback = function() {
         if (resultNum === undefined) {
             divideByZeroReset();
         } else {
-            result = resultNum.toString();
-            first
+            firstOperand = resultNum.toString();
+            operator = '';
+            secondOperand = '';
+            updateDisplay(firstOperand);
         }
     }
 }

@@ -16,16 +16,28 @@
 
 #display {
   height: 150px;
-  padding: 0 18px;
+  padding: 12px 18px;
   margin-bottom: 30px;
   border: 2px solid gray;
   border-radius: 12px;
   background-color: rgb(235, 235, 235);
   display: flex;
-  justify-content: right;
-  align-items:  last baseline;
+  flex-direction: column;
+  justify-content: last baseline;
+  align-items:  right;
   color: rgb(46, 47, 53);
+}
+
+#operation-display {
+  font-size: 36px;
+  display: flex;
+  justify-content: right;
+}
+
+#main-display {
   font-size: 88px;
+  display: flex;
+  justify-content: right;
 }
 
 .btn {

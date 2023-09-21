@@ -127,7 +127,7 @@ const decimalButtonCallback = function() {
     } else {
         // Add to second operand
         if (!secondOperand.includes('.')) {
-            secondOperand += (secondOperand) ? '.' : '0.';;
+            secondOperand += (secondOperand) ? '.' : '0.';
             updateDisplay(secondOperand);
         }
     }

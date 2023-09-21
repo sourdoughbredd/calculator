@@ -47,28 +47,24 @@ const operate = function(operator, a, b) {
     }
 };
 
-const eightDigitRounder = function(str) {
-    let roundedStr = str;
-    const tokens = str.split('.');
-    if (tokens.length === 1) {
-        // No decimal. Round whole number.
-    } else {
-        // Decimal found. Round to 8 total digits
-        numLeft = tokens[0].length;
-        numRight = tokens[1].length;
-        targetNumRight = 8 - numLeft;
+const convertToScientific = function(numStr) {
+    const numDigitsAllowed = 3;
+    return Number(numStr).toExponential(numDigitsAllowed);
+}
 
-    }
-    // console.log(tokens);
-    return roundedStr;
+const eightDigitLimiter = function(numStr) {
+
 }
 
 const updateDisplay = function(str) {
     // Only keep up to 8 digits and a decimal
     let processedStr = str;
-    const digits = str.match(/\d/g);
-    if (digits && digits.length > 8) {
-        processedStr = eightDigitRounder(str);
+    if (str) {
+        const digits = str.match(/\d/g);
+        if (digits && digits.length > 8) {
+            processedStr = eightDigitLimiter(str);
+        }
+        if (processedStr.match(/\d/g).length > 8) alert('EIGHT DIGIT LIMITER RESULTED IN MORE THAN 8 DIGITS!');
     }
     display.textContent = processedStr;
 }
